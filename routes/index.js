@@ -5,7 +5,8 @@ var db = require('../db')
 module.exports = {
   get,
   add,
-  save
+  save,
+  login
 }
 
 function get (req, res) {
@@ -31,4 +32,8 @@ function save (req, res) {
     .catch(err => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
+}
+
+function login (req, res) {
+  res.render('login')
 }

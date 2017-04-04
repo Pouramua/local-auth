@@ -1,12 +1,14 @@
-var path = require('path')
+const path = require('path')
 
-var express = require('express')
-var bodyParser = require('body-parser')
-var hbs = require('express-handlebars')
+const express = require('express')
+const bodyParser = require('body-parser')
+const hbs = require('express-handlebars')
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
+const passport = require('passport')
 
-var index = require('./routes/index')
+const index = require('./routes/index')
 
-var server = express()
+const server = express()
 
 module.exports = server
 
@@ -20,6 +22,6 @@ server.use(bodyParser.urlencoded({ extended: true }))
 // Routes
 
 server.get('/', index.get)
-server.get('/add', index.add)
-server.post('/add', index.save)
-
+server.get('/add', ensureLoggedIn(), index.add)
+server.post('/add', ensureLoggedIn(), index.save)
+server.get('/login', index.login)
